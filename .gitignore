@@ -1,12 +1,11 @@
-# Sensitive configuration — contains real workstation/PC names
-Config/clients.json
-Config/workstations.json
+# Configuration — generic template provided in repo
+# config/clients.json
 
-# Client message history — contains real staff names and internal data
-Clients/
+# Client message data (backend storage)
+data/clients/
 
-# Runtime logs — may contain operational data
-Logs/
+# Runtime logs
+logs/
 
 # macOS
 .DS_Store

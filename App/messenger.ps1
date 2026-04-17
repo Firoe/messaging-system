@@ -1,34 +1,33 @@
-# encoding: UTF-8 with BOM
-Add-Type -AssemblyName System.Windows.Forms
-Add-Type -AssemblyName System.Drawing
-
-[System.Windows.Forms.Application]::EnableVisualStyles()
-
 # ==============================================================================
-#  LISAI Messenger v5.0  —  Premium Chat Interface
+# LISAI Messaging System  —  Secure Enterprise Chat Interface
+# ==============================================================================
+# Version: 1.1.0
+# Description: A lightweight, secure internal messaging system built with PowerShell 
+#              and WinForms. Uses network file shares for data persistence.
+# Author: firoe172@gmail.com
 # ==============================================================================
 
 #region CONFIG & STATE
 
-$ServerRoot   = "\\SRV-01\LISAI Messaging System"
-$ConfigPath   = Join-Path $ServerRoot "Config\clients.json"
+$ServerRoot   = "\\YOUR-SERVER\Messaging-System"
+$ConfigPath   = Join-Path $ServerRoot "config\clients.json"
 $ComputerName = $env:COMPUTERNAME
-$ClientRoot   = Join-Path $ServerRoot "Clients\$ComputerName"
+$ClientRoot   = Join-Path $ServerRoot "data\clients\$ComputerName"
 $InboxPath    = Join-Path $ClientRoot "Inbox"
 $ArchivePath  = Join-Path $ClientRoot "Archive"
 $Heartbeat    = Join-Path $ClientRoot "heartbeat.json"
-$LogsRoot     = Join-Path $ServerRoot "Logs"
+$LogsRoot     = Join-Path $ServerRoot "logs"
 
 if (!(Test-Path $ConfigPath)) {
     [System.Windows.Forms.MessageBox]::Show(
-        "clients.json not found.`n$ConfigPath", "LISAI Messenger",
+        "clients.json not found.`n$ConfigPath", "Messaging System",
         "OK", "Error")
     exit
 }
 
 if (!(Test-Path $ClientRoot)) {
     [System.Windows.Forms.MessageBox]::Show(
-        "Client folder not found for this PC:`n$ClientRoot", "LISAI Messenger",
+        "Client folder not found for this PC:`n$ClientRoot", "Messaging System",
         "OK", "Error")
     exit
 }
@@ -127,7 +126,10 @@ $fntDateSep   = New-TrackedFont "Segoe UI Semibold" 8
 
 #endregion
 
-#region HELPERS
+# ------------------------------------------------------------------------------
+# SECTION: HELPERS
+# Description: Utility functions for UI rendering, networking, and status tracking.
+# ------------------------------------------------------------------------------
 
 function Enable-DoubleBuffer {
     param($Control)
@@ -190,7 +192,7 @@ function Get-PeerDepartment {
 # Reads heartbeat from disk — only called by the refresh timer, NOT during paint
 function Get-PeerOnlineStatus {
     param([string]$PeerName)
-    $hbPath = Join-Path $ServerRoot "Clients\$PeerName\heartbeat.json"
+    $hbPath = Join-Path $ServerRoot "data\clients\$PeerName\heartbeat.json"
     if (Test-Path $hbPath) {
         try {
             $hb = Get-Content $hbPath -Raw | ConvertFrom-Json
@@ -220,7 +222,7 @@ function Update-StatusCache {
         $pc  = $t.ComputerName
         $old = if ($script:statusCache.ContainsKey($pc)) { $script:statusCache[$pc] } else { "" }
         $newStatus = "Offline"
-        $hbPath = Join-Path $ServerRoot "Clients\$pc\heartbeat.json"
+        $hbPath = Join-Path $ServerRoot "data\clients\$pc\heartbeat.json"
         if (Test-Path $hbPath) {
             try {
                 $hb = Get-Content $hbPath -Raw | ConvertFrom-Json
@@ -258,7 +260,10 @@ function Update-Counters {
 
 #endregion
 
-#region DRAGGABLE TITLE BAR
+# ------------------------------------------------------------------------------
+# SECTION: DRAGGABLE TITLE BAR
+# Description: Custom implementation for window dragging and taskbar flashing.
+# ------------------------------------------------------------------------------
 
 Add-Type @"
 using System;
@@ -299,7 +304,7 @@ public class WinDrag {
 #region FORM
 
 $form                 = New-Object System.Windows.Forms.Form
-$form.Text            = "LISAI Messenger"
+$form.Text            = "Messaging System"
 $form.StartPosition   = "CenterScreen"
 $form.FormBorderStyle = "None"
 $form.BackColor       = $bgMain
@@ -341,8 +346,8 @@ $hdr.Add_Paint({
 
     $tf = [System.Drawing.StringFormat]::GenericTypographic
 
-    # LISAI brand
-    $g.DrawString("LISAI", $fntTitle, [System.Drawing.Brushes]::White,
+    # System brand
+    $g.DrawString("GLOBAL", $fntTitle, [System.Drawing.Brushes]::White,
         (New-Object System.Drawing.PointF(22, 10)), $tf)
 
     # Gold dot separator

@@ -1,0 +1,21 @@
+[
+  { "Department": "IT",        "ComputerName": "IT-PC01" },
+  { "Department": "IT",        "ComputerName": "IT-SRV01" },
+  { "Department": "HR",        "ComputerName": "HR-PC01" },
+  { "Department": "HR",        "ComputerName": "HR-PC02" },
+  { "Department": "HR",        "ComputerName": "HR-PC03" },
+  { "Department": "ADMIN",     "ComputerName": "ADMIN-PC01" },
+  { "Department": "ADMIN",     "ComputerName": "ADMIN-PC02" },
+  { "Department": "ACCT",      "ComputerName": "ACCT-PC01" },
+  { "Department": "ACCT",      "ComputerName": "ACCT-PC02" },
+  { "Department": "ACCT",      "ComputerName": "ACCT-PC03" },
+  { "Department": "ACCT",      "ComputerName": "ACCT-PC04" },
+  { "Department": "ACCT",      "ComputerName": "ACCT-PC05" },
+  { "Department": "OPS",       "ComputerName": "OPS-PC01" },
+  { "Department": "OPS",       "ComputerName": "OPS-PC02" },
+  { "Department": "OPS",       "ComputerName": "OPS-PC03" },
+  { "Department": "OPS",       "ComputerName": "OPS-PC04" },
+  { "Department": "OPS",       "ComputerName": "OPS-PC05" },
+  { "Department": "OPS",       "ComputerName": "OPS-PC06" },
+  { "Department": "MARKETING", "ComputerName": "MKT-PC01" }
+]
