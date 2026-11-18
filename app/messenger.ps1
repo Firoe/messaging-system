@@ -1,5 +1,5 @@
-# ==============================================================================
-# LISAI Messaging System  —  Secure Enterprise Chat Interface
+﻿# ==============================================================================
+# Messaging System  —  Secure Enterprise Chat Interface
 # ==============================================================================
 # Version: 1.1.0
 # Description: A lightweight, secure internal messaging system built with PowerShell 
@@ -971,11 +971,11 @@ $pnlChat.Controls.Add($btnSend)
 $trayIcon         = New-Object System.Windows.Forms.NotifyIcon
 $trayIcon.Icon    = [System.Drawing.Icon]::ExtractAssociatedIcon(
     [System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName)
-$trayIcon.Text    = "LISAI Messenger"
+$trayIcon.Text    = "Messaging System"
 $trayIcon.Visible = $true
 
 $trayMenu     = New-Object System.Windows.Forms.ContextMenuStrip
-$trayMenuOpen = $trayMenu.Items.Add("Open LISAI Messenger")
+$trayMenuOpen = $trayMenu.Items.Add("Open Messaging System")
 $trayMenuOpen.Add_Click({
     $form.Show(); $form.WindowState = "Normal"; $form.Activate()
 })
@@ -989,7 +989,7 @@ $trayIcon.Add_DoubleClick({
 $form.Add_Resize({
     if ($form.WindowState -eq "Minimized") {
         $form.Hide()
-        $trayIcon.ShowBalloonTip(2000, "LISAI Messenger",
+        $trayIcon.ShowBalloonTip(2000, "Messaging System",
             "Running in system tray", [System.Windows.Forms.ToolTipIcon]::Info)
     }
 })
